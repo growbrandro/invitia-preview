@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Builder invitație — INVITIA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body class="bg-ivory text-ink">
+  <header class="sticky top-0 z-40 backdrop-blur bg-ivory/90 border-b border-black/5">
+    <div class="max-w-[1400px] mx-auto px-4 py-3 flex items-center justify-between gap-3">
+      <a href="index.html" class="font-display text-2xl">INVITIA</a>
+      <div class="flex items-center gap-2 font-sans text-sm">
+        <button id="btn-preview" class="btn-outline px-3 py-2 rounded-full">Previzualizare</button>
+        <button id="btn-save" class="btn-outline px-3 py-2 rounded-full">Salvează</button>
+        <button id="btn-publish" class="btn-gold px-4 py-2 rounded-full">Publică linkul</button>
+      </div>
+    </div>
+  </header>
+  <div id="save-toast" class="hidden fixed bottom-6 right-6 bg-ink text-ivory font-sans text-sm px-4 py-3 rounded-xl z-50">Schița a fost salvată în cont.</div>
+  <main class="max-w-[1400px] mx-auto px-4 py-8 grid lg:grid-cols-[1fr_320px] gap-10">
+    <form class="space-y-8" onsubmit="return false;">
+      <section class="bg-white rounded-2xl p-6 border border-black/5">
+        <h2 class="font-display text-2xl">1. Evenimentul și modelul</h2>
+        <div class="grid sm:grid-cols-2 gap-4 mt-4 font-sans">
+          <label class="block text-sm">Tip eveniment
+            <select id="eventType" class="field mt-1">
+              <option value="nunta">Nuntă</option>
+              <option value="botez">Botez</option>
+              <option value="personalizat">Eveniment personalizat</option>
+            </select>
+          </label>
+          <label class="block text-sm">Design
+            <select id="template" class="field mt-1">
+              <option value="classic">Clasică — nuntă</option>
+              <option value="modern">Modernă — nuntă</option>
+              <option value="rustic">Vintage rustic</option>
+              <option value="botez">Ceremonia — botez</option>
+              <option value="botanic">Botanic — botez</option>
+              <option value="luxury">Luxury — eveniment</option>
+            </select>
+          </label>
+        </div>
+      </section>
+      <section class="bg-white rounded-2xl p-6 border border-black/5">
+        <h2 class="font-display text-2xl">2. Textul invitației</h2>
+        <div class="grid sm:grid-cols-2 gap-4 mt-4 font-sans text-sm">
+          <label class="block sm:col-span-2">Linie de deschidere
+            <input id="titleLine" class="field mt-1" placeholder="Cu drag vă invităm" />
+          </label>
+          <label class="block sm:col-span-2">Nume
+            <input id="names" class="field mt-1" placeholder="Elena & Andrei / Maria Ioana" />
+          </label>
+          <label class="block">Data
+            <input id="date" type="date" class="field mt-1" />
+          </label>
+          <label class="block">Ora
+            <input id="time" type="time" class="field mt-1" />
+          </label>
+          <label class="block">Locație
+            <input id="venue" class="field mt-1" placeholder="Conacul din Vii" />
+          </label>
+          <label class="block">Oraș
+            <input id="city" class="field mt-1" placeholder="Prahova" />
+          </label>
+          <label class="block sm:col-span-2">Adresă
+            <input id="address" class="field mt-1" />
+          </label>
+          <label class="block sm:col-span-2">Link Google Maps (opțional)
+            <input id="mapsUrl" class="field mt-1" placeholder="https://maps.app.goo.gl/..." />
+          </label>
+          <label class="block sm:col-span-2">Mesaj
+            <textarea id="message" rows="3" class="field mt-1" placeholder="Câteva rânduri către invitați"></textarea>
+          </label>
+          <label class="block sm:col-span-2">Program (câte un rând)
+            <textarea id="schedule" rows="4" class="field mt-1"></textarea>
+          </label>
+          <label class="block">Dress code
+            <input id="dresscode" class="field mt-1" />
+          </label>
+        </div>
+      </section>
+      <section class="bg-white rounded-2xl p-6 border border-black/5">
+        <h2 class="font-display text-2xl">3. Video din cloud</h2>
+        <p class="font-sans text-sm text-[#5c5148] mt-2">Lipește linkul de partajare. Fișierul trebuie să fie vizibil pentru oricine are linkul.</p>
+        <label class="block font-sans text-sm mt-4">Link Google Drive / Dropbox / Mega
+          <input id="videoUrl" class="field mt-1" placeholder="https://drive.google.com/file/d/..." />
+        </label>
+        <p id="video-status" class="font-sans text-xs mt-2 text-[#7A6E64]"></p>
+      </section>
+      <section class="bg-white rounded-2xl p-6 border border-black/5">
+        <h2 class="font-display text-2xl">4. Confirmare prezență</h2>
+        <div class="grid sm:grid-cols-2 gap-4 mt-4 font-sans text-sm">
+          <label class="block">Text buton
+            <input id="rsvpLabel" class="field mt-1" />
+          </label>
+          <label class="block">WhatsApp (opțional)
+            <input id="rsvpPhone" class="field mt-1" placeholder="07xx xxx xxx" />
+          </label>
+        </div>
+      </section>
+    </form>
+    <aside class="lg:sticky lg:top-24 h-fit">
+      <p class="font-sans text-xs tracking-[0.2em] uppercase text-[#7A6E64] mb-3 text-center">Previzualizare telefon</p>
+      <div class="flex justify-center">
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div id="preview-card" class="invite-card invite-classic h-full rounded-[1.7rem]"></div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+  <script src="js/app.js"></script>
+  <script src="js/video-embed.js"></script>
+  <script src="js/builder.js"></script>
+</body>
+</html>
