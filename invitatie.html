@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Invitație — INVITIA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+  <div id="invite-shell" class="min-h-screen invite-classic">
+    <div class="grain"></div>
+    <main class="relative max-w-lg mx-auto px-6 py-16 text-center">
+      <p class="ornament">✦</p>
+      <p id="i-title" class="font-sans text-xs tracking-[0.28em] uppercase mt-4 opacity-80"></p>
+      <h1 id="i-names" class="font-display text-5xl mt-4 leading-tight"></h1>
+      <div class="gold-line w-20 mx-auto my-6"></div>
+      <p id="i-date" class="font-sans capitalize"></p>
+      <p id="i-time" class="font-sans mt-1"></p>
+      <p id="i-venue" class="font-display text-2xl mt-8"></p>
+      <p id="i-city" class="font-sans text-sm mt-1 opacity-80"></p>
+      <a id="i-maps" class="hidden font-sans text-sm underline underline-offset-4 mt-3 inline-block" target="_blank" rel="noopener">Deschide harta</a>
+      <p id="i-message" class="mt-10 leading-relaxed text-[1.05rem]"></p>
+      <p id="i-dress" class="font-sans text-sm mt-4 opacity-80"></p>
+      <section class="mt-12 text-left">
+        <h2 class="font-display text-2xl text-center">Program</h2>
+        <ul id="i-schedule" class="mt-4 space-y-2 font-sans text-sm leading-relaxed"></ul>
+      </section>
+      <section id="video-section" class="hidden mt-12 text-left">
+        <h2 class="font-display text-2xl text-center mb-4">Un mesaj de la noi</h2>
+        <div id="i-video"></div>
+      </section>
+      <a id="i-rsvp" href="#form-rsvp" class="btn-gold font-sans inline-block mt-12 px-8 py-3 rounded-full">Confirmă prezența</a>
+      <form id="form-rsvp" class="mt-10 bg-white/40 backdrop-blur rounded-2xl p-6 text-left font-sans">
+        <h2 class="font-display text-2xl text-center">RSVP</h2>
+        <label class="block text-sm mt-4">Nume
+          <input required class="field mt-1" name="nume" />
+        </label>
+        <label class="block text-sm mt-3">Număr persoane
+          <input type="number" min="1" value="2" class="field mt-1" name="persoane" />
+        </label>
+        <label class="block text-sm mt-3">Mesaj
+          <textarea class="field mt-1" name="mesaj" rows="2"></textarea>
+        </label>
+        <button class="btn-gold w-full mt-4 py-3 rounded-full" type="submit">Trimite confirmarea</button>
+        <p id="rsvp-ok" class="hidden mt-3 text-sm text-center">Mulțumim. V-am notat prezența.</p>
+      </form>
+      <p class="font-sans text-[10px] tracking-widest uppercase mt-16 opacity-50">Creat cu INVITIA</p>
+    </main>
+  </div>
+  <script src="js/app.js"></script>
+  <script src="js/video-embed.js"></script>
+  <script src="js/invite-view.js"></script>
+</body>
+</html>
