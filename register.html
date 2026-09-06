@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cont nou — INVITIA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body class="bg-ivory text-ink min-h-screen">
+  <header class="px-4 py-4 max-w-6xl mx-auto"><a href="index.html" class="font-display text-2xl">INVITIA</a></header>
+  <main class="max-w-md mx-auto px-4 py-16">
+    <h1 class="font-display text-4xl">Creează contul</h1>
+    <p class="font-sans text-sm text-[#5c5148] mt-2">Un cont păstrează toate invitațiile. Le editezi după ce ai trimis linkul.</p>
+    <form id="reg-form" class="mt-8 space-y-4 font-sans">
+      <label class="block text-sm">Nume
+        <input required name="name" class="field mt-1" />
+      </label>
+      <label class="block text-sm">Email
+        <input type="email" required name="email" class="field mt-1" />
+      </label>
+      <label class="block text-sm">Parolă (min. 6)
+        <input type="password" required name="password" minlength="6" class="field mt-1" />
+      </label>
+      <p id="err" class="hidden text-sm text-red-700"></p>
+      <button class="btn-gold w-full py-3 rounded-full" type="submit">Creează contul</button>
+    </form>
+    <p class="font-sans text-sm mt-6">Ai deja cont? <a href="login.html" class="underline decoration-gold">Autentifică-te</a></p>
+  </main>
+  <script src="js/app.js"></script>
+  <script>
+    document.getElementById("reg-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const user = { name: fd.get("name"), email: String(fd.get("email")).toLowerCase(), password: fd.get("password") };
+      const users = JSON.parse(localStorage.getItem("invitia_users") || "[]");
+      if (users.some((u) => u.email === user.email)) {
+        const err = document.getElementById("err");
+        err.textContent = "Există deja un cont cu acest email.";
+        err.classList.remove("hidden");
+        return;
+      }
+      users.push(user);
+      localStorage.setItem("invitia_users", JSON.stringify(users));
+      Invitia.setUser({ email: user.email, name: user.name });
+      const next = new URLSearchParams(location.search).get("next") || "dashboard.html";
+      location.href = next;
+    });
+  </script>
+</body>
+</html>

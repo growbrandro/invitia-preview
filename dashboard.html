@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contul tău — INVITIA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body class="bg-ivory text-ink">
+  <header class="border-b border-black/5">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="font-display text-2xl">INVITIA</a>
+      <div class="font-sans text-sm flex items-center gap-4">
+        <span id="who"></span>
+        <button id="out" class="underline">Ieșire</button>
+      </div>
+    </div>
+  </header>
+  <main class="max-w-5xl mx-auto px-4 py-12">
+    <div id="pub-banner" class="hidden mb-6 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-2xl p-4 font-sans text-sm"></div>
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <h1 class="font-display text-4xl">Invitațiile tale</h1>
+        <p class="font-sans text-sm text-[#5c5148] mt-1">Fiecare are link propriu, editabil oricând.</p>
+      </div>
+      <a href="builder.html" class="btn-gold font-sans px-5 py-2 rounded-full">Invitație nouă</a>
+    </div>
+    <div id="list" class="mt-10 grid gap-4"></div>
+  </main>
+  <script src="js/app.js"></script>
+  <script>
+    const user = Invitia.getUser();
+    if (!user) location.href = "login.html";
+    document.getElementById("who").textContent = user.name || user.email;
+    document.getElementById("out").onclick = () => { Invitia.logout(); location.href = "index.html"; };
+
+    const published = new URLSearchParams(location.search).get("published");
+    if (published) {
+      const banner = document.getElementById("pub-banner");
+      const link = location.origin + location.pathname.replace("dashboard.html", "invitatie.html") + "?id=" + encodeURIComponent(published);
+      banner.classList.remove("hidden");
+      banner.innerHTML = "Invitația e publică. Link: <a class='underline' href='" + link + "'>" + link + "</a>";
+    }
+
+    const items = Invitia.myInvites();
+    const list = document.getElementById("list");
+    if (!items.length) {
+      list.innerHTML = '<p class="font-sans text-[#5c5148]">Nu ai încă nicio invitație salvată. Deschide builder-ul.</p>';
+    } else {
+      list.innerHTML = items.map((i) => `
+        <article class="bg-white rounded-2xl p-5 border border-black/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <p class="font-display text-2xl">${i.names || "Fără titlu"}</p>
+            <p class="font-sans text-sm text-[#7A6E64]">${i.eventType} · ${i.date || ""} · ${i.published ? "publică" : "schiță"}</p>
+          </div>
+          <div class="font-sans text-sm flex gap-3">
+            <a class="underline" href="builder.html?id=${encodeURIComponent(i.id)}">Editează</a>
+            <a class="underline" href="invitatie.html?id=${encodeURIComponent(i.id)}">Deschide</a>
+          </div>
+        </article>`).join("");
+    }
+  </script>
+</body>
+</html>
